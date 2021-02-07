@@ -5,6 +5,8 @@ defmodule DontpadPlusPlus.Application do
 
   use Application
 
+  alias DontpadPlusPlus.PageTree
+
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
@@ -12,7 +14,8 @@ defmodule DontpadPlusPlus.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: DontpadPlusPlus.PubSub},
       # Start the Endpoint (http/https)
-      DontpadPlusPlusWeb.Endpoint
+      DontpadPlusPlusWeb.Endpoint,
+      {PageTree, name: {:global, PageTree}}
       # Start a worker by calling: DontpadPlusPlus.Worker.start_link(arg)
       # {DontpadPlusPlus.Worker, arg}
     ]

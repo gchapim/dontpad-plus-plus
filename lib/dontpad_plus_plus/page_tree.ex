@@ -6,8 +6,8 @@ defmodule DontpadPlusPlus.PageTree do
   @doc """
   Starts a new page tree.
   """
-  def start_link(_opts) do
-    Agent.start_link(fn -> %{} end)
+  def start_link(opts \\ []) do
+    Agent.start_link(fn -> %{} end, opts)
   end
 
   @doc """
