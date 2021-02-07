@@ -1,3 +1,3 @@
 defmodule DontpadPlusPlus.Page do
-  defstruct children: %{}, content: ""
+  defstruct children: %{}, content: "", name: nil
 end
