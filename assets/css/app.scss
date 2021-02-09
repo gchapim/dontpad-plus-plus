@@ -2,6 +2,20 @@
 @import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
+body {
+  margin: 0px;
+}
+
+main {
+  height: 100vh;
+}
+
+.main-textarea {
+  width: 100%;
+  height: 100vh;
+  margin-bottom: 0px;
+}
+
 /* LiveView specific classes for your customizations */
 .phx-no-feedback.invalid-feedback,
 .phx-no-feedback .invalid-feedback {

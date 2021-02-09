@@ -15,6 +15,8 @@ config :dontpad_plus_plus, DontpadPlusPlusWeb.Endpoint,
   pubsub_server: DontpadPlusPlus.PubSub,
   live_view: [signing_salt: "3oFUjenR"]
 
+config :dontpad_plus_plus, :textarea_reload_time, 20_000
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
