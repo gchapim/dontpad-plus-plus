@@ -28,7 +28,7 @@ defmodule DontpadPlusPlusWeb.PageTreeLiveTest do
 
       view
       |> element("form")
-      |> render_change(%{content: "New content"})
+      |> render_change(%{page: %{content: "New content"}})
 
       assert %_{content: "New content"} = PageTree.get_in(@page_tree_name, ["bojack", "horseman"])
     end
@@ -42,7 +42,7 @@ defmodule DontpadPlusPlusWeb.PageTreeLiveTest do
 
       view
       |> element("form")
-      |> render_change(%{content: "New content"})
+      |> render_change(%{page: %{content: "New content"}})
 
       assert render(second_view) =~ "New content"
     end

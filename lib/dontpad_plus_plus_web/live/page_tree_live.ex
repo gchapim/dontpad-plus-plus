@@ -2,14 +2,18 @@ defmodule DontpadPlusPlusWeb.PageTreeLive do
   use DontpadPlusPlusWeb, :live_view
   use Phoenix.HTML
 
-  alias DontpadPlusPlus.{Page, PageTree, PubSub}
+  alias DontpadPlusPlus.{PageTree, PubSub}
 
   @impl true
   def mount(_params, session, socket) do
     schedule_reload()
-    Phoenix.PubSub.subscribe(PubSub, Enum.join(session["path"], "-"))
+    Phoenix.PubSub.subscribe(PubSub, path(session["path"]))
 
     {:ok, assign(socket, page: session["page"], path: session["path"])}
+  end
+
+  defp path(path) do
+    Enum.join(path, "-")
   end
 
   @impl true
@@ -19,11 +23,11 @@ defmodule DontpadPlusPlusWeb.PageTreeLive do
     Phoenix.PubSub.broadcast_from(
       PubSub,
       self(),
-      Enum.join(socket.assigns.path, "-"),
+      path(socket.assigns.path),
       {:content_update, content}
     )
 
-    {:noreply, assign(socket, :page, %Page{socket.assigns.page | content: content})}
+    {:noreply, socket}
   end
 
   defp save(path, content) do
