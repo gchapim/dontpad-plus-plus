@@ -46,6 +46,16 @@ defmodule DontpadPlusPlus.PageTreeTest do
     assert is_nil(PageTree.update_in(page_tree, [], "some content"))
   end
 
+  test "update_in/3 for existing root input", %{page_tree: page_tree} do
+    tree = ["bojack"]
+    page = %Page{name: "bojack"}
+
+    PageTree.put(page_tree, "bojack")
+
+    PageTree.update_in(page_tree, tree, "some content")
+    assert %Page{page | content: "some content"} == PageTree.get_in(page_tree, tree)
+  end
+
   test "update_in/3 for existing nested input", %{page_tree: page_tree} do
     nested_tree = ["bojack", "horseman"]
     nested_page = %Page{name: "horseman"}

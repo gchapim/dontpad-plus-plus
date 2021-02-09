@@ -25,7 +25,7 @@ defmodule DontpadPlusPlus.PageTree do
     end
   end
 
-  def get_in(page_tree, []), do: nil
+  def get_in(_page_tree, []), do: nil
 
   def get_in(page_tree, [root | tree_children]) do
     page_tree
@@ -70,12 +70,18 @@ defmodule DontpadPlusPlus.PageTree do
     )
   end
 
-  def update_in(page_tree, [], content), do: nil
+  def update_in(_page_tree, [], _content), do: nil
 
   def update_in(page_tree, [root | tree_children] = children, content) do
     root_page = get(page_tree, root)
 
-    page = %Page{root_page | children: do_update_in(root_page.children, tree_children, content)}
+    page =
+      if tree_children == [] do
+        %Page{root_page | content: content}
+      else
+        %Page{root_page | children: do_update_in(root_page.children, tree_children, content)}
+      end
+
     put(page_tree, root, page)
 
     __MODULE__.get_in(page_tree, children)
