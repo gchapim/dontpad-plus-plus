@@ -13,10 +13,15 @@ defmodule DontpadPlusPlusWeb.PageTreeLive do
   end
 
   @impl true
-  def handle_event("save", %{"content" => content}, socket) do
+  def handle_event("save", %{"page" => %{"content" => content}}, socket) do
     save(socket.assigns.path, content)
 
-    Phoenix.PubSub.broadcast_from(PubSub, self(), Enum.join(socket.assigns.path, "-"), {:content_update, content})
+    Phoenix.PubSub.broadcast_from(
+      PubSub,
+      self(),
+      Enum.join(socket.assigns.path, "-"),
+      {:content_update, content}
+    )
 
     {:noreply, assign(socket, :page, %Page{socket.assigns.page | content: content})}
   end

@@ -1,3 +1,4 @@
 <%= form_for :page, "#", [phx_change: "save"], fn f -> %>
-  <%= textarea f, :content, phx_debounce: 200, value: @page.content, data_pending_val: @page.content, phx_hook: "PageTextArea", class: "main-textarea" %>
+  <%= textarea f, :content, phx_debounce: 200, value: @page.content,
+        data_pending_val: @page.content, phx_hook: "PageTextArea", class: "main-textarea" %>
 <% end %>
