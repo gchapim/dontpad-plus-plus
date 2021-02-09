@@ -70,6 +70,32 @@ defmodule DontpadPlusPlus.PageTree do
     )
   end
 
+  def update_in(page_tree, [], content), do: nil
+
+  def update_in(page_tree, [root | tree_children] = children, content) do
+    root_page = get(page_tree, root)
+
+    page = %Page{root_page | children: do_update_in(root_page.children, tree_children, content)}
+    put(page_tree, root, page)
+
+    __MODULE__.get_in(page_tree, children)
+  end
+
+  defp do_update_in(children, [current_level | []], content) do
+    children
+    |> Map.update!(current_level, fn page -> %Page{page | content: content} end)
+  end
+
+  defp do_update_in(nil, _tree_children, _), do: nil
+
+  defp do_update_in(children, [current_level | tree_children], content) do
+    children
+    |> Map.update!(
+      current_level,
+      fn page -> %Page{page | children: do_update_in(page.children, tree_children, content)} end
+    )
+  end
+
   @doc """
   Puts a new page for the given `key` in the `page_tree`. Returns the new `page`
   """
